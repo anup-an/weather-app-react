@@ -1,16 +1,18 @@
-import React from 'react';
+import React from 'react'
 import '../src/styles/App.css'
+import Header from './components/Header';
+import SearchBox from './components/SearchBox';
+import WidgetList from './components/WidgetList/intex';
 
 const App: React.FC = (): JSX.Element => {
   return (
     <div className="main">
       <header >
-        <h3>ambine</h3>
-        <h1>Weather</h1>
+        <Header />
       </header>
       <main>
-        <h1>Search input</h1>
-        <h2>Weather widgets here</h2>
+        <SearchBox />
+        <WidgetList />
       </main>
     </div>
   );
