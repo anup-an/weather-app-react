@@ -9,6 +9,8 @@ const initialState: AppState = {
 
 const reducer = (state = initialState, action: AppAction) => {
     switch (action.type) {
+        case t.SET_SEARCH_KEYWORD:
+            return { ...state, searchKeyword: action.payload.keyword }
         case t.SEARCH_CITIES:
             return { ...state, cities: [...action.payload.cities] }
         case t.ADD_CITY_WEATHER: 

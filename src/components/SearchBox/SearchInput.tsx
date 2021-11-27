@@ -1,11 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useDebounce } from '../../hooks';
+import { searchCities, setSearchKeyword } from '../../redux/actions';
+import { AppState, LISTEN_SEARCH_CITIES } from '../../redux/types';
 import '../../styles/App.css'
 
 const SearchInput: React.FC = (): JSX.Element => {
+    const dispatch = useDispatch()
+    const {searchKeyword} = useSelector((state: AppState) => state)
+    const debouncedKeyword = useDebounce(searchKeyword, 2000);
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        //make a post request 
+        dispatch({type: LISTEN_SEARCH_CITIES, keyword: searchKeyword})
     }
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setSearchKeyword(event.target.value))
+    }
+
+    useEffect(
+        () => {
+            if (debouncedKeyword && debouncedKeyword !== '') {
+                console.log(debouncedKeyword)
+                dispatch({ type: LISTEN_SEARCH_CITIES, keyword: debouncedKeyword })               
+            } else {
+                dispatch(searchCities([]))
+            }
+        }, [debouncedKeyword]
+    );
+    
     return (
         <div className='search_container'>
         <form onSubmit={handleSubmit} className='search-form'>        
@@ -16,7 +40,8 @@ const SearchInput: React.FC = (): JSX.Element => {
                     type="text"
                     placeholder="Search for a city"
                         className="input"
-                        size={100}
+                        onChange={handleInputChange}
+                    size={100}
                 />
                         </label>
                 <button className="search-button">
