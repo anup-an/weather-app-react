@@ -10,10 +10,12 @@ const App: React.FC = (): JSX.Element => {
       <header>
         <Header />
       </header>
-      <main >
-          <SearchBox />
+      <div id="search_box">
+        <SearchBox />
+      </div>
+        <div id="widget_box">
           <WidgetList/>
-      </main>
+        </div>
     </div>
   );
 }

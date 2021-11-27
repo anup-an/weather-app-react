@@ -32,8 +32,8 @@ const SearchInput: React.FC = (): JSX.Element => {
     
     return (
         <div className='search_container'>
-        <form onSubmit={handleSubmit} className='search-form'>        
-            <label htmlFor="keywords">
+        <form onSubmit={handleSubmit} autoComplete="off" className='search-form'>        
+            <label htmlFor="keywords" />
                 <input
                     id="keywords"
                     name="keywords"
@@ -41,9 +41,7 @@ const SearchInput: React.FC = (): JSX.Element => {
                     placeholder="Search for a city"
                         className="input"
                         onChange={handleInputChange}
-                    size={80}
                 />
-                        </label>
                 <button className="search-button">
 
                 <svg
