@@ -13,10 +13,11 @@ const reducer = (state = initialState, action: AppAction) => {
             return { ...state, searchKeyword: action.payload.keyword }
         case t.SEARCH_CITIES:
             return { ...state, cities: [...action.payload.cities] }
-        case t.ADD_CITY_WEATHER: 
-            return { ...state, weather: [...state.weather, action.payload.weather] }
+        case t.ADD_CITY_WEATHER:
+            const filteredList = [...state.weather].filter(weather => weather.city !== action.payload.weather.city)
+            return { ...state, weather: [...filteredList, action.payload.weather] }
         case t.DELETE_CITY_WEATHER: 
-            const updatedList = [...state.weather].filter(weather => weather.city !== 'city')
+            const updatedList = [...state.weather].filter(weather => weather.city !== action.payload.weather.city)
             return { ...state, weather: [...updatedList] }
         default:
             return state

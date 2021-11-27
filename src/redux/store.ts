@@ -20,7 +20,13 @@ const makeStore = (initialState = initState) => {
         }
     }
 
-    const store = createStore(reducer, initialState, composeEnhancers(applyMiddleware(sagaMiddleware)))  
+    const weather = localStorage.getItem('weather')
+    const persistedState: AppState = {
+    ...initialState,
+    weather: weather === null ? []: JSON.parse(weather)
+  }
+
+    const store = createStore(reducer, persistedState, composeEnhancers(applyMiddleware(sagaMiddleware)))  
     sagaMiddleware.run(rootSaga)
     return store
 }

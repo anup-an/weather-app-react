@@ -7,12 +7,12 @@ import WidgetList from './components/WidgetList/intex';
 const App: React.FC = (): JSX.Element => {
   return (
     <div className="main">
-      <header >
+      <header>
         <Header />
       </header>
-      <main>
-        <SearchBox />
-        <WidgetList />
+      <main >
+          <SearchBox />
+          <WidgetList/>
       </main>
     </div>
   );

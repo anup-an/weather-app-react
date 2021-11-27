@@ -41,7 +41,7 @@ const SearchInput: React.FC = (): JSX.Element => {
                     placeholder="Search for a city"
                         className="input"
                         onChange={handleInputChange}
-                    size={100}
+                    size={80}
                 />
                         </label>
                 <button className="search-button">

@@ -1,22 +1,33 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteCityWeather } from '../../redux/actions'
+import { AppState, WeatherType } from '../../redux/types'
 
 const WidgetList: React.FC = (): JSX.Element => {
-    const cities = ["Turku", "Helsinki", "Oulu", "Kathmandu"]
+    const { weather } = useSelector((state: AppState) => state)
+    const dispatch = useDispatch()
+    const deleteWidget = (cityWeather: WeatherType) => {
+        dispatch(deleteCityWeather(cityWeather))
+    }
     return (
         <ul className="grid">
-            {cities.map(city => (
+            {weather.map(cityWeather => (
                 <li className="card">
-                    <button>
+                    <button onClick={() => deleteWidget(cityWeather)}>
                         <p>x</p>
                     </button>
                     <div>
-                        <p>0C</p>                       
                         <div>
-                            <p>{city}</p>
+                            <p>{cityWeather.temperature}</p>
+                            <span id="celcius_symbol">&#8451;</span>
+                        </div>                       
+                        <div>
+                            <p>{cityWeather.city}</p>
+                            <p>{cityWeather.country}</p>
                             <p>{new Date().getHours()}:{new Date().getMinutes()}</p>
                         </div>
                     </div>
-                    <p>Thunderstorm</p>
+                    <p>{cityWeather.condition}</p>
                     
                 </li>
             ))}

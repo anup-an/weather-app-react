@@ -19,6 +19,7 @@ export const searchCities = (cities: CityType[]): AppAction => {
 }
 
 export const addCityWeather = (weather: WeatherType): AppAction => {
+    console.log(weather)
     return {
         type: ADD_CITY_WEATHER,
         payload: {

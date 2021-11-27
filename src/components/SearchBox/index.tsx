@@ -4,7 +4,7 @@ import SearchInput from './SearchInput'
 
 const SearchBox: React.FC = (): JSX.Element => {
     return (
-        <div>
+        <div className='search_box'>
             <SearchInput />
             <Cities />
         </div>

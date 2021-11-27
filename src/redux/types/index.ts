@@ -11,10 +11,11 @@ export type CityType = {
 }
 
 export type WeatherType = {
-    temperature: string
+    temperature: number
     city: string
     country: string
     time: string
+    condition: string
 }
 export type SetSearchKeywordAction = {
     type: typeof SET_SEARCH_KEYWORD
@@ -50,6 +51,70 @@ export type AppState = {
     cities: CityType[]
     searchKeyword: string
     weather: WeatherType[]
+}
+
+export type CityResponseType = {
+    data: {
+    id: string,
+    wikiDataId: string,
+    type: string,
+    city: string,
+    name: string,
+    country: string,
+    countryCode: string,
+    region: string,
+    regionCode: string,
+    latitude: number,
+    longitude: number,
+        population: number
+    }[]
+}
+
+export type WeatherResponseType = {
+    "coord": {
+        "lon": number,
+        "lat": number
+    },
+    "weather": [
+        {
+            "id": number,
+            "main": string,
+            "description": string,
+            "icon": string
+        }
+    ],
+    "base": string,
+    "main": {
+        "temp": number,
+        "feels_like": number,
+        "temp_min": number,
+        "temp_max": number,
+        "pressure": number,
+        "humidity": number
+    },
+    "visibility": number,
+    "wind": {
+        "speed": number,
+        "deg": number
+    },
+    "rain": {
+        "1h": number
+    },
+    "clouds": {
+        "all": number
+    },
+    "dt": number,
+    "sys": {
+        "type": number,
+        "id": number,
+        "country": string,
+        "sunrise": number,
+        "sunset": number
+    },
+    "timezone": number,
+    "id": number,
+    "name": string,
+    "cod": number
 }
 
 
