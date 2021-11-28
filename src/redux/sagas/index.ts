@@ -5,17 +5,17 @@ import { addCityWeather, searchCities } from "../actions"
 import { ADD_CITY_WEATHER, AppAction, AppState, CityResponseType, CityType, DELETE_CITY_WEATHER, LISTEN_ADD_CITY_WEATHER, LISTEN_SEARCH_CITIES, WeatherResponseType, WeatherType} from "../types"
 import { Action } from "redux"
 
-type CityInputType = {
+export type CityInputType = {
     keyword: string
 }
 
-type WeatherInputType = {
+export type WeatherInputType = {
     name: string
     country: string
 }
-type AppActionType = Action & AppAction & CityInputType & WeatherInputType
+export type AppActionType = Action & AppAction & CityInputType & WeatherInputType
 
-function* searchCitiesSaga(search: CityInputType) {
+export function* searchCitiesSaga(search: CityInputType) {
     const { keyword } = search
     try {
         if (keyword !== '') {
@@ -30,7 +30,7 @@ function* searchCitiesSaga(search: CityInputType) {
     }
 }
 
-function* addWeatherSaga(city: WeatherInputType) {
+export function* addWeatherSaga(city: WeatherInputType) {
     const {name, country} = city
     try {    
         const response: AxiosResponse<WeatherResponseType> = yield call(axios.get, `http://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=1e9e35761dc83e1c61236cc9333bd5fe`)
@@ -47,13 +47,25 @@ function* addWeatherSaga(city: WeatherInputType) {
     }
 }
 
-function* saveWeatherWithSaga() {
+export function* saveWeatherWithSaga() {
   try {
     const state: AppState = yield select()
     yield localStorage.setItem('weather', JSON.stringify(state.weather))
   } catch (error) {
     console.log(error)
   }
+}
+
+export function* searchCitiesActionWatcher() {
+    yield takeLatest<AppActionType>(LISTEN_SEARCH_CITIES, searchCitiesSaga)
+}
+
+export function* addWeatherActionWatcher() {
+    yield takeEvery<AppActionType>(LISTEN_ADD_CITY_WEATHER, addWeatherSaga)
+}
+
+export function* saveWeatherActionWatcher() {
+    yield takeEvery<AppActionType>([ADD_CITY_WEATHER, DELETE_CITY_WEATHER], saveWeatherWithSaga)
 }
 
 export default function* rootSaga() {

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components Snapshot testing for <Cities> component 1`] = `ReactWrapper {}`;
+
+exports[`Components Snapshot testing for <SearchInput/> component 1`] = `ReactWrapper {}`;
+
+exports[`Components Snapshot testing for <WidgetList/> component 1`] = `ReactWrapper {}`;
