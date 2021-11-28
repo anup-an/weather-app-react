@@ -70,8 +70,8 @@ export function* saveWeatherActionWatcher() {
 
 export default function* rootSaga() {
     yield all([
-        takeLatest<AppActionType>(LISTEN_SEARCH_CITIES, searchCitiesSaga),
-        takeEvery<AppActionType>(LISTEN_ADD_CITY_WEATHER, addWeatherSaga),
-        takeEvery<AppActionType>([ADD_CITY_WEATHER, DELETE_CITY_WEATHER], saveWeatherWithSaga)
+        searchCitiesActionWatcher(),
+        addWeatherActionWatcher(),
+        saveWeatherActionWatcher()
     ])
 }
