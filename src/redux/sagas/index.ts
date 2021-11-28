@@ -18,14 +18,23 @@ export type AppActionType = Action & AppAction & CityInputType & WeatherInputTyp
 
 // Api call to city API
 export async function callCityApi(keyword: string) {
-    const response: AxiosResponse<CityResponseType> = await axios.get(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=${keyword}`)
-    return response
+    try {
+        const response: AxiosResponse<CityResponseType> = await axios.get(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=${keyword}`)
+        return response
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 // Api call to weather API
 export async function callWeatherApi(name: string) {
-    const response: AxiosResponse<WeatherResponseType> = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=1e9e35761dc83e1c61236cc9333bd5fe`)
-    return response
+    try {
+        const response: AxiosResponse<WeatherResponseType> = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=1e9e35761dc83e1c61236cc9333bd5fe`)
+        return response
+    } catch (error) {
+        alert(`Weather information not available for the city '${name}'`)
+        console.log(error)
+    }
 }
 
 export function* searchCitiesSaga(search: CityInputType) {
