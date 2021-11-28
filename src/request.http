@@ -1,0 +1,4 @@
+// Search cities (Working)
+GET http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=kath HTTP/1.1
+
+###
