@@ -1,4 +1,4 @@
-import { AppAction, AppState } from "../types";
+import { AppAction, AppState } from '../types';
 import * as t from '../types' 
 
 const initialState: AppState = {

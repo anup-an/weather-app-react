@@ -1,19 +1,20 @@
 import React from 'react'
+
 import '../src/styles/App.css'
-import Header from './components/Header';
-import SearchBox from './components/SearchBox';
-import WidgetList from './components/WidgetList/intex';
+import Header from './components/Header'
+import SearchBox from './components/SearchBox'
+import WidgetList from './components/WidgetList'
 
 const App: React.FC = (): JSX.Element => {
   return (
-    <div className="main">
+    <div className='main'>
       <header>
         <Header />
       </header>
-      <div id="search_box">
+      <div id='search_box'>
         <SearchBox />
       </div>
-        <div id="widget_box">
+        <div id='widget_box'>
           <WidgetList/>
         </div>
     </div>

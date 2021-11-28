@@ -1,9 +1,10 @@
-import { call, put, takeLatest, takeEvery } from "@redux-saga/core/effects"
+import { put, takeEvery, takeLatest } from '@redux-saga/core/effects'
+import axios, { AxiosResponse } from 'axios'
+import { Action } from 'redux'
 import { all, select } from 'redux-saga/effects'
-import axios, { AxiosResponse } from "axios"
-import { addCityWeather, searchCities } from "../actions"
-import { ADD_CITY_WEATHER, AppAction, AppState, CityResponseType, CityType, DELETE_CITY_WEATHER, LISTEN_ADD_CITY_WEATHER, LISTEN_SEARCH_CITIES, WeatherResponseType, WeatherType} from "../types"
-import { Action } from "redux"
+
+import { addCityWeather, searchCities } from '../actions'
+import { ADD_CITY_WEATHER, AppAction, AppState, CityResponseType, CityType, DELETE_CITY_WEATHER, LISTEN_ADD_CITY_WEATHER, LISTEN_SEARCH_CITIES, WeatherResponseType, WeatherType } from '../types'
 
 export type CityInputType = {
     keyword: string
@@ -15,15 +16,29 @@ export type WeatherInputType = {
 }
 export type AppActionType = Action & AppAction & CityInputType & WeatherInputType
 
+// Api call to city API
+export async function callCityApi(keyword: string) {
+    const response: AxiosResponse<CityResponseType> = await axios.get(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=${keyword}`)
+    return response
+}
+
+// Api call to weather API
+export async function callWeatherApi(name: string) {
+    const response: AxiosResponse<WeatherResponseType> = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=1e9e35761dc83e1c61236cc9333bd5fe`)
+    return response
+}
+
 export function* searchCitiesSaga(search: CityInputType) {
     const { keyword } = search
     try {
         if (keyword !== '') {
-            const response: AxiosResponse<CityResponseType> = yield call(axios.get, `http://geodb-free-service.wirefreethought.com/v1/geo/cities?namePrefix=${keyword}`)
-            const cities: CityType[] = response.data.data.map(foundCity => ({ city: foundCity.name, country: foundCity.country })) 
-            yield put(searchCities(cities))
-        } else {
-            yield put(searchCities([]))
+            const response: AxiosResponse<CityResponseType> = yield callCityApi(keyword)
+            if (response) {
+                const cities: CityType[] | undefined = response.data.data.map(foundCity => ({ city: foundCity.name, country: foundCity.country }))
+                yield put(searchCities(cities))
+            } else {
+                yield put(searchCities([]))
+            }
         }
     } catch (error) {
         console.log(error)
@@ -33,15 +48,17 @@ export function* searchCitiesSaga(search: CityInputType) {
 export function* addWeatherSaga(city: WeatherInputType) {
     const {name, country} = city
     try {    
-        const response: AxiosResponse<WeatherResponseType> = yield call(axios.get, `http://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=1e9e35761dc83e1c61236cc9333bd5fe`)
-        const weather: WeatherType = {
-            city: response.data.name,
-            country: country,
-            temperature: Math.round(response.data.main.temp),
-            time: new Date().getHours() + ':' + new Date().getMinutes(),
-            condition: response.data.weather[0].main
+        const response: AxiosResponse<WeatherResponseType> = yield callWeatherApi(name)
+        if (response) {            
+            const weather: WeatherType = {
+                city: response.data.name,
+                country: country,
+                temperature: Math.round(response.data.main.temp),
+                time: new Date().getHours() + ':' + new Date().getMinutes(),
+                condition: response.data.weather[0].main
+            }
+            yield put(addCityWeather(weather))
         }
-        yield put(addCityWeather(weather))
     } catch (error) {
         console.log(error)
     }

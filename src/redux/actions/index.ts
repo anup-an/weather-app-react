@@ -1,4 +1,4 @@
-import { CityType, AppAction, SEARCH_CITIES, WeatherType, ADD_CITY_WEATHER, DELETE_CITY_WEATHER, SET_SEARCH_KEYWORD } from "../types"
+import { CityType, AppAction, SEARCH_CITIES, WeatherType, ADD_CITY_WEATHER, DELETE_CITY_WEATHER, SET_SEARCH_KEYWORD } from '../types'
 
 export const setSearchKeyword = (keyword: string): AppAction => {
     return {
@@ -19,7 +19,6 @@ export const searchCities = (cities: CityType[]): AppAction => {
 }
 
 export const addCityWeather = (weather: WeatherType): AppAction => {
-    console.log(weather)
     return {
         type: ADD_CITY_WEATHER,
         payload: {

@@ -10,16 +10,16 @@ const WidgetList: React.FC = (): JSX.Element => {
         dispatch(deleteCityWeather(cityWeather))
     }
     return (
-        <ul className="grid">
+        <ul className='grid'>
             {weather.map(cityWeather => (
-                <li className="card">
+                <li className='card' key={cityWeather.city}>
                     <button onClick={() => deleteWidget(cityWeather)}>
                         <p>x</p>
                     </button>
                     <div>
                         <div>
                             <p>{cityWeather.temperature}</p>
-                            <span id="celcius_symbol">&#8451;</span>
+                            <span id='celcius_symbol'>&#8451;</span>
                         </div>                       
                         <div>
                             <p>{cityWeather.city}</p>

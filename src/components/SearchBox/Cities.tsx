@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { AppState, LISTEN_ADD_CITY_WEATHER } from '../../redux/types'
 
 const Cities: React.FC = (): JSX.Element => {
@@ -10,7 +11,7 @@ const Cities: React.FC = (): JSX.Element => {
     }
     return (
         <div className='list_container'>
-            <ul className="cities_ul">
+            <ul className='cities_ul'>
                 {cities.map(city => (
                     <li key={city.city}>
                         <p>{city.city},{' '}{city.country}</p>

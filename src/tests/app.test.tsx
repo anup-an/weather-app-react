@@ -1,11 +1,9 @@
-import { mount, ReactWrapper, shallow } from 'enzyme'
-import configureStore from "redux-mock-store";
-
+import { mount } from 'enzyme'
 import { Provider } from 'react-redux';
 import Cities from '../components/SearchBox/Cities';
 import makeStore from '../redux/store';
 import SearchInput from '../components/SearchBox/SearchInput';
-import WidgetList from '../components/WidgetList/intex';
+import WidgetList from '../components/WidgetList';
 import { Store } from 'redux';
 import { AppState, AppAction } from '../redux/types';
 
@@ -14,15 +12,15 @@ describe('Components', () => {
     beforeEach(() => {
         store = makeStore({
             cities: [{
-                city: "Kathmandu",
-                country: "Nepal",
+                city: 'Kathmandu',
+                country: 'Nepal',
             }],
             weather: [{
                 temperature: 5,
-                city: "Kathmandu",
-                country: "India",
-                time: "20:30",
-                condition: "Cloudy"
+                city: 'Kathmandu',
+                country: 'India',
+                time: '20:30',
+                condition: 'Cloudy'
             }],
             searchKeyword: 'Kathmandu'
         })
